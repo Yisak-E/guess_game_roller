@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>pra</title>
+    </head>
+    <body>
+        <h1>guess  number from 1 to 30</h1>
+        <div></div>
+        <input type="number" id="guess_n" value="0">
+        <button id="guess_btn">Enter Guess</button>
+<script>
+    const output=document.querySelector('div');
+    const myInput=document.querySelector('input');
+    const btn = document.querySelector('button');
+
+btn.onclick = generate;
+output.innerHTML = 'Please guess the number';
+
+let small= 1;
+let high = 30;
+
+    let guess_num;
+    let hidden_num;
+    hidden_num = Math.floor(Math.random() * 30) + 1;
+
+myInput.setAttribute('min', small);
+myInput.setAttribute('max', high);
+let ans;
+let answer_correct = false;
+
+
+function generate(){
+    guess_num  = myInput.value;
+      
+    checker(guess_num, hidden_num); 
+    if(answer_correct){
+         ans = 'Please guess the number';
+    }
+     
+}
+    function checker(guess, real) {
+        btn.textContent = "Enter Guess";
+       btn.style.backgroundColor = 'rgb(240, 240, 240)';
+        if (guess == real) {
+            alert('your guess is correct!');
+            btn.textContent = "New Game";
+            btn.style.backgroundColor='gray';
+            
+            set_to_default();
+           
+        }
+        else {
+            ans = '<span style="color: red;">your guess is incorrect.</span><br> please try again!<br>'
+            limiter();
+            myInput.value = small;
+        }
+        //ans += `your guess = ${guess} : real number = ${real}<br>`
+        output.innerHTML = `${ans}`;
+    }
+
+    function limiter(){
+        if(guess_num < hidden_num){
+            small = guess_num;
+
+            ans += `guess between ${small} and ${high}<br>`;
+        }
+        else{
+            high = guess_num;
+
+            ans += `guess between ${small} and ${high}<br>`;
+        }
+    }
+    function set_to_default(){
+        location.reload();
+    }
+
+</script>
+    </body>
+</html>
