@@ -1,79 +1,66 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>pra</title>
-    </head>
-    <body>
-        <h1>guess  number from 1 to 30</h1>
-        <div></div>
-        <input type="number" id="guess_n" value="0">
-        <button id="guess_btn">Enter Guess</button>
-<script>
-    const output=document.querySelector('div');
-    const myInput=document.querySelector('input');
-    const btn = document.querySelector('button');
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Game Roller</title>
+    <link rel="stylesheet" href="custom.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 flex item-center justify-center min-h-screen  font-sans">
+    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-md flex flex-col items-center gap-6">
+        
+        <div class="text-center">
+            <h1 class="text-3xl font-extrabold text-slate-800 mb-1">Lucky Roller</h1>
+            <p class="text-slate-500 text-sm">Guess the winning number (1-16)</p>
+        </div>
 
-btn.onclick = generate;
-output.innerHTML = 'Please guess the number';
-
-let small= 1;
-let high = 30;
-
-    let guess_num;
-    let hidden_num;
-    hidden_num = Math.floor(Math.random() * 30) + 1;
-
-myInput.setAttribute('min', small);
-myInput.setAttribute('max', high);
-let ans;
-let answer_correct = false;
-
-
-function generate(){
-    guess_num  = myInput.value;
-      
-    checker(guess_num, hidden_num); 
-    if(answer_correct){
-         ans = 'Please guess the number';
-    }
-     
-}
-    function checker(guess, real) {
-        btn.textContent = "Enter Guess";
-       btn.style.backgroundColor = 'rgb(240, 240, 240)';
-        if (guess == real) {
-            alert('your guess is correct!');
-            btn.textContent = "New Game";
-            btn.style.backgroundColor='gray';
+        <!-- Game Controls -->
+        <div class="w-full space-y-4">
+            <div class="flex flex-col gap-2">
+                <label for="guessInput" class="text-sm font-semibold text-slate-700">Your Guess:</label>
+                <input 
+                    type="number" 
+                    id="guessInput" 
+                    min="1" 
+                    max="16" 
+                    placeholder="1-16" 
+                    class="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-center text-lg font-bold text-blue-600"
+                >
+            </div>
             
-            set_to_default();
-           
-        }
-        else {
-            ans = '<span style="color: red;">your guess is incorrect.</span><br> please try again!<br>'
-            limiter();
-            myInput.value = small;
-        }
-        //ans += `your guess = ${guess} : real number = ${real}<br>`
-        output.innerHTML = `${ans}`;
-    }
+            <button 
+                id="spinBtn" 
+                onclick="spinWheel()" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transition-transform transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                SPIN THE WHEEL
+            </button>
+        </div>
 
-    function limiter(){
-        if(guess_num < hidden_num){
-            small = guess_num;
+        <!-- Wheel Area -->
+        <div class="relative mt-2 mb-4">
+            <!-- The Triangle Pointer -->
+            <div class="pointer"></div>
+        </div>
 
-            ans += `guess between ${small} and ${high}<br>`;
-        }
-        else{
-            high = guess_num;
+         <!-- The Wheel SVG -->
+            <div class="wheel-container w-72 h-72">
+                <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer rim -->
+                    <circle cx="100" cy="100" r="98" fill="#334155" />
+                    
+                    <!-- Spinning Group -->
+                    <g id="wheel-group" transform-origin="100 100">
+                        <!-- Segments will be injected here by JS -->
+                    </g>
+                    
+                    <!-- Center decorative knob -->
+                    <circle cx="100" cy="100" r="10" fill="white" stroke="#334155" stroke-width="2"/>
+                </svg>
+            </div>
+        
+    </div>
+</body>
 
-            ans += `guess between ${small} and ${high}<br>`;
-        }
-    }
-    function set_to_default(){
-        location.reload();
-    }
-
-</script>
-    </body>
 </html>
